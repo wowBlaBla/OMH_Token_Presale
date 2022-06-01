@@ -1,41 +1,76 @@
+require("@nomiclabs/hardhat-etherscan");
+require("@nomiclabs/hardhat-ethers");
 require("@nomiclabs/hardhat-waffle");
+require('@openzeppelin/hardhat-upgrades');
+require("dotenv").config();
+require("hardhat-gas-reporter");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+task("accounts", "Prints the list of accounts", async () => {
+  const accounts = await ethers.getSigners();
 
   for (const account of accounts) {
     console.log(account.address);
   }
 });
 
+const INFURA_API_KEY =
+  process.env.INFURA_API_KEY || "69841a6025c9493a83c583199dc278b3";
+
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
+
+const accounts = [process.env.PRIVATE_KEY];
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  defaultNetwork: "mumbai",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
+      forking: {
+        url: `https://polygon-rpc.com/`,
+      },
+      hardfork: 'london',
     },
-    mumbai: {
-      url: "https://polygon-mumbai.g.alchemy.com/v2/xGDijyoL6Si2Fz8zjTaRUt29DRb44Kuv",
-      accounts: [
-        '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80', // deployer
-        '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'
-      ]
-    }
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${INFURA_API_KEY}`,
+      accounts,
+      chainId: 4
+    },
+    maticmainnet: {
+      url: "https://polygon-rpc.com/",
+      accounts,
+      chainId: 137,
+      live: true,
+      saveDeployments: true,
+    },
+    matictestnet: {
+      url: "https://rpc-mumbai.matic.today",
+      accounts,
+      chainId: 80001,
+      live: true,
+      saveDeployments: true,
+      tags: ["staging"],
+      gasPrice: 1000000000,
+      gasMultiplier: 1,
+    },
   },
   solidity: {
     version: "0.8.13",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
-  }
+        runs: 200,
+      },
+    },
+  },
+  mocha: {
+    timeout: 50000,
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_KEY_POLYGON,
+  },
 };

@@ -1,15 +1,23 @@
-# Basic Sample Hardhat Project
+# OMH ERC20 and Distribution contract
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+## Package install
+yarn 
+---or---
+npm install
 
-Try running some of the following tasks:
+### Build contracts
+yarn build
+---or---
+npm run build
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
+### Deploy contracts to Rinkeby testnet
+yarn deploy-rinkeby
+---or---
+npm run deploy-rinkeby
+
+### Verify
+- Distribution
+npx hardhat verify --network rinkeby --contract contracts/Distribution.sol:Distribution <Deployed Contract Address> 1652572800
+- OMHERC20
+npx hardhat verify --network rinkeby --contract contracts/OMHERC20.sol:OMHERC20 <Deployed Contract Address> <Deployed Distribution Contract Address> 
+
