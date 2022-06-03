@@ -12,23 +12,23 @@ async function main() {
 
   // const OMHERC20 = await hre.ethers.getContractFactory("OMHERC20");
   // const ERC20 = await OMHERC20.deploy();
-  // 0x7D686Ff7a4d436Ed10675A7F0E83Fd41477b0717
+  // // 0x7D686Ff7a4d436Ed10675A7F0E83Fd41477b0717
   // await ERC20.deployed();
 
   // console.log("OMHERC20 deployed to:", ERC20.address);
-  // const OMHERC20 = await hre.ethers.getContractFactory("OMHERC20");
-  // const ERC20 = await OMHERC20.deploy();
-  // await ERC20.deployed();
-  // console.log("OMH deployed to:", ERC20.address);
+  const OMHERC20 = await hre.ethers.getContractFactory("OMHERC20");
+  const ERC20 = await OMHERC20.deploy();
+  await ERC20.deployed();
+  console.log("OMH deployed to:", ERC20.address);
 
-  // const USDTToken = await hre.ethers.getContractFactory("TestUSDT");
-  // const USDT = await USDTToken.deploy();
-  // await USDT.deployed();
-  // console.log("USDT deployed to:", USDT.address);
+  const USDTToken = await hre.ethers.getContractFactory("TestUSDT");
+  const USDT = await USDTToken.deploy();
+  await USDT.deployed();
+  console.log("USDT deployed to:", USDT.address);
 
   const PresaleContract = await hre.ethers.getContractFactory("Presale");
-  // const Presale = await PresaleContract.deploy(ERC20.address, USDT.address, "0x7794ee502922e2b723432DDD852B3C30A911F021");
-  const Presale = await PresaleContract.deploy("0x6c4544017B681CCFa5255143610385FEd3A0a445", "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0");
+  const Presale = await PresaleContract.deploy(ERC20.address, USDT.address, "0xd0D5e3DB44DE05E9F294BB0a3bEEaF030DE24Ada");
+  // const Presale = await PresaleContract.deploy("0x6c4544017B681CCFa5255143610385FEd3A0a445", "0xc2132D05D31c914a87C6611C10748AEb04B58e8F", "0xAB594600376Ec9fD91F8e885dADF0CE036862dE0");
   await Presale.deployed();
   console.log("Presale deployed to:", Presale.address);
 

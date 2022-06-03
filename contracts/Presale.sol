@@ -191,16 +191,17 @@ contract Presale {
         return 0;
     }
 
-    function getTokenPrice(uint256 _tokenAmount) public view returns (uint256) {
+    function getTokenPrice() public view returns (uint256) {
+        uint256 tokenBalance = _getTokenBalance() - totalSoldAmount;
         uint8 tokenSalePeriod = getSalePeriod();
 
-        if (_tokenAmount >= ROUND1_MIN_AMOUNT * 10**18 && _tokenAmount <= ROUND2_MIN_AMOUNT * 10**18) {
+        if (tokenBalance >= ROUND1_MIN_AMOUNT * 10**18 && tokenBalance <= ROUND2_MIN_AMOUNT * 10**18) {
             if (tokenSalePeriod == 1) {
                 return seedPriceForRound1;
             } else if (tokenSalePeriod == 2) {
                 return privatePriceForRound1;
             }
-        } else if (_tokenAmount > ROUND2_MIN_AMOUNT * 10**18 && _tokenAmount <= ROUND2_MAX_AMOUNT * 10**18) {
+        } else if (tokenBalance > ROUND2_MIN_AMOUNT * 10**18 && tokenBalance <= ROUND2_MAX_AMOUNT * 10**18) {
             if (tokenSalePeriod == 1) {
                 return seedPriceForRound2;
             } else if (tokenSalePeriod == 2) {
@@ -225,7 +226,7 @@ contract Presale {
 
     function estimatedMaticAmount(uint256 _amount) public view returns (uint256) {
         uint256 maticPrice = uint256(getLatestPrice());
-        uint256 tokenPrice = getTokenPrice(_amount);
+        uint256 tokenPrice = getTokenPrice();
 
         uint256 estimatedAmount = tokenPrice * _amount / maticPrice;
 
@@ -233,7 +234,7 @@ contract Presale {
     }
 
     function estimatedUSDTAmount(uint256 _amount) public view returns (uint256) {
-        uint256 tokenPrice = getTokenPrice(_amount);
+        uint256 tokenPrice = getTokenPrice();
 
         uint256 estimatedAmount = tokenPrice * _amount / 10**20;
 
@@ -245,7 +246,7 @@ contract Presale {
         require(msg.value > 0, "Value cannot be zero");
 
         uint256 maticPrice = uint256(getLatestPrice());
-        uint256 tokenPrice = getTokenPrice(_amount);
+        uint256 tokenPrice = getTokenPrice();
 
         require(tokenPrice > 0, "Invalid token price");
         require(msg.value >= tokenPrice * _amount / maticPrice, "Insufficient value");
@@ -254,18 +255,18 @@ contract Presale {
         emit Buy(msg.sender, 1, msg.value, _amount, block.timestamp);
     }
 
-    function buyTokenWithUSDT(uint256 _amount, uint256 _amountInUSDT) external {
+    function buyTokenWithUSDT(uint256 _amount) external {
         require(getSalePeriod() > 0, "Not valid sale period");
-        require(_amountInUSDT > 0, "amount cannot be zero");
+
+        uint256 tokenPrice = getTokenPrice();
+        require(tokenPrice > 0, "Invalid token price");
+
+        uint256 _amountInUSDT = tokenPrice * _amount / 10**20;
+        require(_amountInUSDT > 0, "Not valid amount");
+
         require(usdtAddr.balanceOf(msg.sender) >= _amountInUSDT, "Your USDT balance is insufficient");
 
-        uint256 tokenPrice = getTokenPrice(_amount);
-
-        require(tokenPrice > 0, "Invalid token price");
-        require(_amountInUSDT >= tokenPrice * _amount / 10**20, "Insufficient value");
-
         usdtAddr.transferFrom(msg.sender, address(this), _amountInUSDT);
-
         _lockToken(_amount, msg.sender);
 
         emit Buy(msg.sender, 2, _amountInUSDT, _amount, block.timestamp);
