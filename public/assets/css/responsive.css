@@ -1657,7 +1657,14 @@
     }
     .ProjectClasicSlider_ClaimBtn{
         text-align: center;
-        position: absolute;
+        /* position: absolute; */
+        bottom: 110px;
+        width: 100%;
+        left: 0px;
+    }
+    .ProjectClasicSlider_Input{
+        text-align: center;
+        /* position: absolute; */
         bottom: 110px;
         width: 100%;
         left: 0px;

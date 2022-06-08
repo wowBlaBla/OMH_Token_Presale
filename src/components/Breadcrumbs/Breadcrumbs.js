@@ -1,26 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Web3Context from "../../context/Web3Context";
+import { OMH_ABI, OMH_ADDRESS, PRESALE_ABI, PRESALE_ADDRESS } from "../../config";
+import getWeb3 from "../../utils/getWeb3";
+import { toast } from "react-toastify";
 
 const Breadcrumbs = () => {
 	const [amountToBuy, setAmountToBuy] = useState("");
+	const [tokenPrice, setTokenPrice] = useState(0.065);
+	const [soldAmount, setSoldAmount] = useState(0);
+
+	useEffect(async () => {
+		try {
+			const _web3 = await getWeb3();
+			const presaleContract = new _web3.eth.Contract(PRESALE_ABI, PRESALE_ADDRESS);
+			const retSoldAmount = await presaleContract.methods.totalSoldAmount().call();
+			console.log(retSoldAmount);
+			setSoldAmount(retSoldAmount);
+		} catch (e) {
+			console.log(e);
+		}
+	}, []);
 
 	const buyTokenInMatic = async (web3, account, presaleContract) => {
-		if (amountToBuy === "") return;
+		// if (amountToBuy === "") return;
+		if (amountToBuy === "") {
+			console.log("must input");
+			toast.error("Please input buy amount");
+			return;
+		}
 
-		const amount = web3.utils.toWei(amountToBuy);
+		if ((amountToBuy < 10000) || (amountToBuy > 20000000)) {
+			console.log("min amount 10000, max amount 20000000");
+			toast.error("Please input correct buy amount, only 10,000 ~ 20,000,000 OMH token available");
+			return;
+		}
 
-		const estimatedMatic = await presaleContract.methods.estimatedMaticAmount(amount).call()
-		presaleContract.methods.buyTokenWithMatic(amount).send({ from: account, value: estimatedMatic })
-		.once("receipt", (receipt) => { console.log(receipt); });
+		try {
+			const amount = web3.utils.toWei(amountToBuy);
+
+			const estimatedMatic = await presaleContract.methods.estimatedMaticAmount(amount).call()
+			presaleContract.methods.buyTokenWithMatic(amount).send({ from: account, value: estimatedMatic })
+			.once("receipt", (receipt) => { toast.success("Congratulations"); console.log(receipt); });
+		} catch (e) {
+			console.log(e);
+			toast.error("Error" + e);
+			return;
+		}
+		
 	}
 
 	const buyTokenInUSDT = async (web3, account, presaleContract) => {
-		if (amountToBuy === "") return;
-		
-		const amount = web3.utils.toWei(amountToBuy);
+		// if (amountToBuy === "") return;
 
-		presaleContract.methods.buyTokenWithUSDT(amount).send({ from: account })
-		.once("receipt", (receipt) => { console.log(receipt); });
+		if (amountToBuy === "") {
+			console.log("must input");
+			toast.error("Please input buy amount");
+			return;
+		}
+
+		if ((amountToBuy < 10000) || (amountToBuy > 20000000)) {
+			console.log("min amount 10000, max amount 20000000");
+			toast.error("Please input correct buy amount, only 10,000 ~ 20,000,000 OMH token available");
+			return;
+		}
+
+		try {
+			const amount = web3.utils.toWei(amountToBuy);
+
+			const estimatedUSDT = await presaleContract.methods.estimatedUSDTAmount(amount).call()
+			presaleContract.methods.buyTokenWithUSDT(amount, estimatedUSDT).send({ from: account })
+			.once("receipt", (receipt) => { toast.success("Congratulations"); console.log(receipt); });
+		} catch (e) {
+			console.log(e);
+			toast.error("Error" + e);
+			return;
+		}
 	}
 
 	return (
@@ -40,7 +94,7 @@ const Breadcrumbs = () => {
 					<div className="container">
 						<div className="Project_clasicSliderSect">
 							<div className="liveProoject_Headings">
-								<h2 className="mb-50">SEED & PRIVATE SALE</h2>
+								<h2 className="mb-50">SEED SALE</h2>
 								<div className="video__icon">
 									<div className="circle--outer"></div>
 									<div className="circle--inner"></div>
@@ -135,34 +189,36 @@ const Breadcrumbs = () => {
 												<div className="ProjectClasicSlider_ImgAndTitleSect">
 													<a href="project-details.html">
 														<img
-															src="assets/images/project/ninga-4.png"
+															src="assets/images/fav.png"
 															alt="img"
-															className="img-fluid"
+															height="70"
+															width="70"
+															// className="img-fluid"
 														/>
 													</a>
 													<div className="ProjectClasicSlider_TextSect">
 														<h3>
 															<a href="project-details.html">
-																Galaxy War
+																Omveritas
 															</a>
 														</h3>
 														<p>
-															price (GAC) = 0.59 BUSD
+															price (OMH) = {tokenPrice} USD
 														</p>
 													</div>
 												</div>
-												{/* <div className="ProjectClasicSlider_LeftRiseSect">
+												<div className="ProjectClasicSlider_LeftRiseSect">
 													<div className="ProjectClasicSlider_RiseCeontent">
-														<span>Targeted Raise</span>
-														<h2>300,000 BUSD</h2>
+														<span>Targeted Seed Sale Amount</span>
+														<h2>1,700,000,000 OMH</h2>
 													</div>
 													<div className="ProjectClasicSlider_RiseCeontent">
-														<span>Total Raised</span>
-														<h2>56,499.70 BUSD</h2>
+														<span>Total Sold Amount</span>
+														<h2>{ soldAmount } OMH</h2>
 													</div>
-												</div> */}
-												<div className="ProjectClasicSlider_ClaimBtn">
-													<input type="text" placeholder="Amount to Buy" onChange={(e) => { setAmountToBuy(e.target.value) }} />
+												</div>
+												<div className="ProjectClasicSlider_Input">
+													<input type="text" pattern="[0-9]*" placeholder="0.00" value={amountToBuy} onChange={(e) => { setAmountToBuy((v) => (e.target.validity.valid ? e.target.value : v)) }} />
 												</div>
 												<div className="ProjectClasicSlider_ClaimBtn">
 													{ (!web3 || !account) && (
@@ -227,24 +283,24 @@ const Breadcrumbs = () => {
 															<p
 																className="title timer"
 																data-from="0"
-																data-to="88"
+																data-to={ soldAmount / 17000000 }
 																data-speed="1500"
 															>
 																<span className="counter">
-																	88
+																	{ soldAmount / 17000000 }
 																</span>
 																%
 															</p>
-															<div className="overlay"></div>
-															<div className="left"></div>
-															<div className="right"></div>
+															{/* <div className="overlay"></div> */}
+															{/* <div className="left"></div>
+															<div className="right"></div> */}
 														</div>
 													</div>
 												</div>
 											</div>
 											<div className="ProjectClasicSlider_RightSect">
 												<div className="ProjectClasicSlider_RightTimer">
-													<h2>SALE END IN</h2>
+													<h2>SEED SALE END IN</h2>
 													<div className="price-counter">
 														<div className="timer timer_2">
 															<ul>
@@ -264,38 +320,38 @@ const Breadcrumbs = () => {
 														</div>
 													</div>
 												</div>
-												{/* <div className="ProjectClasicSlider_Right_Access_AllocationSect">
+												<div className="ProjectClasicSlider_Right_Access_AllocationSect">
 													<div className="Access_AllocationText">
-														<span>Access</span>
-														<h2>Public Access</h2>
+														<span>10K - 10M OMH</span>
+														<h2>Price: 0.065 USD</h2>
 													</div>
 													<div className="Access_AllocationText">
-														<span>Allocation</span>
-														<h2>500 BUSD Max</h2>
+														<span>10M - 20M OMH</span>
+														<h2>OMH Price: 0.05 USD</h2>
 													</div>
-												</div> */}
+												</div>
 												<ul className="ProjectClasicSliderSocialLinks">
-													{/* <li>
-														<a href="#">
+													<li>
+														<a href="https://t.me/OMHtoken">
 															<i className="icon-telegram"></i>
 														</a>
 													</li>
 													<li>
-														<a href="#">
+														<a href="https://twitter.com/omhealthdata">
 															<i className="icon-twitter"></i>
 														</a>
 													</li>
 													<li>
-														<a href="#">
+														<a href="https://discord.gg/qSSrk7vz">
 															<i className="icon-discord"></i>
 														</a>
 													</li>
 													<li>
-														<a href="#">
+														<a href="https://medium.com/omh-token">
 															<i className="icon-medium"></i>
 														</a>
 													</li>
-													<li>
+													{/* <li>
 														<a href="#">
 															<i className="icon-world"></i>
 														</a>

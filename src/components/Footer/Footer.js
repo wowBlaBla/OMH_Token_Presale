@@ -31,7 +31,7 @@ const Footer = () => {
             </div> */}
                 <div className="footer-area">
                     <div className="container">
-                        <div className="sec-heading text-center">
+                        <div id="social_block" className="sec-heading text-center">
                             <div className="sub-inner mb-52">
                                 <img
                                     className="heading-right-image"
@@ -96,7 +96,7 @@ const Footer = () => {
                         </div>
                         <div className="footer-mainmenu text-center mb-20">
                             <ul>
-                                <li>
+                                {/* <li>
                                     <a href="#">Features</a>
                                 </li>
                                 <li>
@@ -107,15 +107,15 @@ const Footer = () => {
                                 </li>
                                 <li>
                                     <a href="#">About us</a>
+                                </li> */}
+                                <li>
+                                    <a href="#social_block">Social media</a>
                                 </li>
                                 <li>
-                                    <a href="#">Social media</a>
+                                    <a target="_blank" href="https://zanthion.com/terms-of-service/">Terms of Service</a>
                                 </li>
                                 <li>
-                                    <a href="#">Terms of Service</a>
-                                </li>
-                                <li>
-                                    <a href="#">Privacy Policy</a>
+                                    <a target="_blank" href="https://zanthion.com/privacy-policy/">Privacy Policy</a>
                                 </li>
                             </ul>
                         </div>

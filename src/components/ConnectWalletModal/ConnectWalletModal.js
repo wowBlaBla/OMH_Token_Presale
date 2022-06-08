@@ -57,7 +57,7 @@ const ConnectWalletModal = () => {
 												MetaMask
 											</a>
 										</li>
-										<li>
+										<li className="heading-blur">
 											<a href="#">
 												<span>
 													<img
@@ -68,7 +68,7 @@ const ConnectWalletModal = () => {
 												Coinbase
 											</a>
 										</li>
-										<li>
+										<li className="heading-blur">
 											<a href="#">
 												<span>
 													<img
@@ -79,7 +79,7 @@ const ConnectWalletModal = () => {
 												Trust Wallet
 											</a>
 										</li>
-										<li>
+										<li className="heading-blur">
 											<a href="#">
 												<span>
 													<img
@@ -94,13 +94,13 @@ const ConnectWalletModal = () => {
 								</div>
 								<p>
 									By connecting your wallet, you agree to our{" "}
-									<a href="#">
+									<a target="_blank" href="https://zanthion.com/terms-of-service/">
 										<span className="modal-title">
 											Terms of Service{" "}
 										</span>
 									</a>
 									and our{" "}
-									<a href="#">
+									<a target="_blank" href="https://zanthion.com/privacy-policy/">
 										<span className="modal-title">
 											{" "}
 											Privacy Policy

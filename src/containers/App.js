@@ -8,7 +8,9 @@ import Breadcrumbs from "../components/Breadcrumbs/Breadcrumbs";
 import ConnectWalletModal from "../components/ConnectWalletModal/ConnectWalletModal";
 import getWeb3 from "../utils/getWeb3";
 import Web3Context from "../context/Web3Context";
+import { ToastContainer } from "react-toastify";
 import { OMH_ABI, OMH_ADDRESS, PRESALE_ABI, PRESALE_ADDRESS } from "../config";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends React.Component {
 	// App contains routes and also wrapped with snackbar and intl for localization
@@ -31,10 +33,10 @@ class App extends React.Component {
 			this.setState({ account: accounts[0] });
 
 			const omhContract = new _web3.eth.Contract(OMH_ABI, OMH_ADDRESS);
-    	this.setState({ omhContract });
+    		this.setState({ omhContract });
 
 			const presaleContract = new _web3.eth.Contract(PRESALE_ABI, PRESALE_ADDRESS);
-    	this.setState({ presaleContract });
+    		this.setState({ presaleContract });
 		};
 
 		this.unloadWeb3 = async () => {
@@ -105,6 +107,7 @@ class App extends React.Component {
 				<Breadcrumbs />
 				<Footer />
 				<ConnectWalletModal />
+				<ToastContainer />
 			</Web3Context.Provider>
 		);
 	}
