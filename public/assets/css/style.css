@@ -9288,6 +9288,28 @@ ProjectClasic
     color: #FFFFFF;
 }
 
+.ProjectClasicSlider_ReleaseDate {
+    margin-top: 15px;
+}
+.ProjectClasicSlider_ReleaseDate span {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 30px;
+    margin-bottom: 0px;
+    color: rgba(255, 255, 255, 0.7);
+}
+.ProjectClasicSlider_ReleaseDate h2 {
+    font-family: 'Russo One';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 30px;
+    margin-bottom: 0px;
+    color: #25ff34;
+}
+
 .ProjectClasicSlider_Input {
     width: 100%;
 }

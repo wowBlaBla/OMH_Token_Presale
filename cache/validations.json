@@ -580,6 +580,1048 @@
       "Presale": {
         "src": "contracts\\Presale.sol:7",
         "version": {
+          "withMetadata": "d30fc6deea88f0e82a440ba92d7df203e1715e89560ab437de23f0dd370c7d96",
+          "withoutMetadata": "d52da6a3a0e38ee72123db472547dfd21849507c610c8c9cd018abc58adc9d0e",
+          "linkedWithoutMetadata": "d52da6a3a0e38ee72123db472547dfd21849507c610c8c9cd018abc58adc9d0e"
+        },
+        "inherit": [],
+        "libraries": [
+          "SafeERC20"
+        ],
+        "methods": [
+          "(address,address,address)",
+          "setTokenAddress(address)",
+          "setUSDTAddress(address)",
+          "setSeedPriceForRound1(uint256)",
+          "setSeedPriceForRound2(uint256)",
+          "setPrivatePriceForRound1(uint256)",
+          "setPrivatePriceForRound2(uint256)",
+          "setSeedStartDate(uint256)",
+          "setSeedEndDate(uint256)",
+          "setPrivateEndDate(uint256)",
+          "setLPWallet(address payable)",
+          "setDevWallet(address payable)",
+          "setMarketWallet(address payable)",
+          "setCFWallet1(address payable)",
+          "setCFWallet2(address payable)",
+          "setCFWallet3(address payable)",
+          "setDeployer(address)",
+          "_getTokenBalance()",
+          "getSalePeriod()",
+          "getTokenPrice(uint256)",
+          "getLatestPrice()",
+          "estimatedMaticAmount(uint256)",
+          "estimatedUSDTAmount(uint256)",
+          "buyTokenWithMatic(uint256)",
+          "buyTokenWithUSDT(uint256,uint256)",
+          "claimToken()",
+          "burn()",
+          "withdraw()",
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Presale",
+            "src": "contracts\\Presale.sol:99"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "seedPriceForRound1",
+            "src": "contracts\\Presale.sol:24"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "seedPriceForRound2",
+            "src": "contracts\\Presale.sol:25"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "privatePriceForRound1",
+            "src": "contracts\\Presale.sol:26"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "privatePriceForRound2",
+            "src": "contracts\\Presale.sol:27"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "ROUND1_MIN_AMOUNT",
+            "src": "contracts\\Presale.sol:29"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "ROUND2_MIN_AMOUNT",
+            "src": "contracts\\Presale.sol:30"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "ROUND2_MAX_AMOUNT",
+            "src": "contracts\\Presale.sol:31"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "LOCKING_PERIOD",
+            "src": "contracts\\Presale.sol:32"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "seedStartDate",
+            "src": "contracts\\Presale.sol:34"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "seedEndDate",
+            "src": "contracts\\Presale.sol:35"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "privateEndDate",
+            "src": "contracts\\Presale.sol:36"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "lpWallet",
+            "src": "contracts\\Presale.sol:38"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "devWallet",
+            "src": "contracts\\Presale.sol:39"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "marketWallet",
+            "src": "contracts\\Presale.sol:40"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "cfWallet1",
+            "src": "contracts\\Presale.sol:41"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "cfWallet2",
+            "src": "contracts\\Presale.sol:42"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "cfWallet3",
+            "src": "contracts\\Presale.sol:43"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "totalSoldAmount",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:15"
+            },
+            {
+              "label": "lockedTokens",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_struct(lockingTokenInfo)2039_storage)",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:17"
+            },
+            {
+              "label": "priceFeed",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:19"
+            },
+            {
+              "label": "tokenAddr",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(IERC20)814",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:21"
+            },
+            {
+              "label": "usdtAddr",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_contract(IERC20)814",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:22"
+            },
+            {
+              "label": "seedPriceForRound1",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:24"
+            },
+            {
+              "label": "seedPriceForRound2",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:25"
+            },
+            {
+              "label": "privatePriceForRound1",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:26"
+            },
+            {
+              "label": "privatePriceForRound2",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:27"
+            },
+            {
+              "label": "ROUND1_MIN_AMOUNT",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:29"
+            },
+            {
+              "label": "ROUND2_MIN_AMOUNT",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:30"
+            },
+            {
+              "label": "ROUND2_MAX_AMOUNT",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:31"
+            },
+            {
+              "label": "LOCKING_PERIOD",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:32"
+            },
+            {
+              "label": "seedStartDate",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:34"
+            },
+            {
+              "label": "seedEndDate",
+              "offset": 0,
+              "slot": "14",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:35"
+            },
+            {
+              "label": "privateEndDate",
+              "offset": 0,
+              "slot": "15",
+              "type": "t_uint256",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:36"
+            },
+            {
+              "label": "lpWallet",
+              "offset": 0,
+              "slot": "16",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:38"
+            },
+            {
+              "label": "devWallet",
+              "offset": 0,
+              "slot": "17",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:39"
+            },
+            {
+              "label": "marketWallet",
+              "offset": 0,
+              "slot": "18",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:40"
+            },
+            {
+              "label": "cfWallet1",
+              "offset": 0,
+              "slot": "19",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:41"
+            },
+            {
+              "label": "cfWallet2",
+              "offset": 0,
+              "slot": "20",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:42"
+            },
+            {
+              "label": "cfWallet3",
+              "offset": 0,
+              "slot": "21",
+              "type": "t_address_payable",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:43"
+            },
+            {
+              "label": "deployer",
+              "offset": 0,
+              "slot": "22",
+              "type": "t_address",
+              "contract": "Presale",
+              "src": "contracts\\Presale.sol:45"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(IERC20)814": {
+              "label": "contract IERC20",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_struct(lockingTokenInfo)2039_storage)": {
+              "label": "mapping(address => struct Presale.lockingTokenInfo)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(lockingTokenInfo)2039_storage": {
+              "label": "struct Presale.lockingTokenInfo",
+              "members": [
+                {
+                  "label": "amount",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "endLockTimestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "TestUSDT": {
+        "src": "contracts\\TestUSDT.sol:6",
+        "version": {
+          "withMetadata": "5bb82281ef4d751188a57d68a0438507e7b34e0d09c79d5f1dd577f20b535269",
+          "withoutMetadata": "dd93bd969a5f5ce5f249e0ceb24160771acf8c47ed34145f19d5b4678c9f0e26",
+          "linkedWithoutMetadata": "dd93bd969a5f5ce5f249e0ceb24160771acf8c47ed34145f19d5b4678c9f0e26"
+        },
+        "inherit": [
+          "ERC20",
+          "IERC20Metadata",
+          "IERC20",
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "decimals()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "TestUSDT",
+            "src": "contracts\\TestUSDT.sol:8"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:36"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:38"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:40"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:42"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:43"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      }
+    },
+    {
+      "AggregatorV3Interface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Ownable": {
+        "src": "@openzeppelin\\contracts\\access\\Ownable.sol:20",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "@openzeppelin\\contracts\\access\\Ownable.sol:28"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin\\contracts\\access\\Ownable.sol:21"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "ERC20": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:35",
+        "version": {
+          "withMetadata": "7ac9c4432de962abdcc3926c0ade02ea0c21ca4f1cb858aa2d299d08f2e655b0",
+          "withoutMetadata": "7eaf6e2da372192c65ae6dd6fa3ba2298f35fb14a7a18391f0b8200e2d1c6918",
+          "linkedWithoutMetadata": "7eaf6e2da372192c65ae6dd6fa3ba2298f35fb14a7a18391f0b8200e2d1c6918"
+        },
+        "inherit": [
+          "IERC20Metadata",
+          "IERC20",
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "(string,string)",
+          "name()",
+          "symbol()",
+          "decimals()",
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "increaseAllowance(address,uint256)",
+          "decreaseAllowance(address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "ERC20",
+            "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:54"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:36"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:38"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:40"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:42"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:43"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "IERC20": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol:9",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "IERC20Metadata": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol:13",
+        "inherit": [
+          "IERC20"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "SafeERC20": {
+        "src": "@openzeppelin\\contracts\\token\\ERC20\\utils\\SafeERC20.sol:18",
+        "version": {
+          "withMetadata": "8304f7b4121f46a8342c0f454015aab2cc5c677fb793ab6c12c49f2106b3e8b5",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Address": {
+        "src": "@openzeppelin\\contracts\\utils\\Address.sol:9",
+        "version": {
+          "withMetadata": "563497f6ce8c298fea64d75417581ebeb05038d9702a87a6303c618c455ab6e9",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin\\contracts\\utils\\Address.sol:191"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Context": {
+        "src": "@openzeppelin\\contracts\\utils\\Context.sol:16",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1",
+          "flat": false
+        }
+      },
+      "Distribution": {
+        "src": "contracts\\Distribution.sol:7",
+        "version": {
+          "withMetadata": "fd676f002f3d6a2790242a3cb8bd77b9e2b130bf99ca914f77b589e078a92e6e",
+          "withoutMetadata": "00eeb794e8d72401637f91fe67d8bcdaf09798f7b86a8ee3c91c2bb8ab508839",
+          "linkedWithoutMetadata": "00eeb794e8d72401637f91fe67d8bcdaf09798f7b86a8ee3c91c2bb8ab508839"
+        },
+        "inherit": [],
+        "libraries": [
+          "SafeERC20"
+        ],
+        "methods": [
+          "(uint256)",
+          "withdraw()",
+          "getWithdrawableStatus(address)",
+          "getWithdrawalAmount(address)",
+          "changeAdmin1(address)",
+          "changeAdmin2(address)",
+          "changeDeployer(address)",
+          "changeStartDate(uint256)",
+          "changePeriod(uint256)",
+          "setOMHToken(address)",
+          "setHolders(address,(uint256,uint256,uint256,uint256,uint256,bool))",
+          "pause(address)",
+          "start(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Distribution",
+            "src": "contracts\\Distribution.sol:55"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "admin1",
+            "src": "contracts\\Distribution.sol:20"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "admin2",
+            "src": "contracts\\Distribution.sol:21"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "periodInSecond",
+            "src": "contracts\\Distribution.sol:25"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "OMHToken",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_address",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:19"
+            },
+            {
+              "label": "admin1",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:20"
+            },
+            {
+              "label": "admin2",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:21"
+            },
+            {
+              "label": "deployer",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_address",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:22"
+            },
+            {
+              "label": "startDate",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:24"
+            },
+            {
+              "label": "periodInSecond",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint256",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:25"
+            },
+            {
+              "label": "holders",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_struct(OMH)1401_storage)",
+              "contract": "Distribution",
+              "src": "contracts\\Distribution.sol:27"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_struct(OMH)1401_storage)": {
+              "label": "mapping(address => struct Distribution.OMH)",
+              "numberOfBytes": "32"
+            },
+            "t_struct(OMH)1401_storage": {
+              "label": "struct Distribution.OMH",
+              "members": [
+                {
+                  "label": "percent",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "startAfter",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "months",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "numOfTimes",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "numOfWithdraws",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "4"
+                },
+                {
+                  "label": "status",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "5"
+                }
+              ],
+              "numberOfBytes": "192"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "OMHERC20": {
+        "src": "contracts\\OMHERC20.sol:7",
+        "version": {
+          "withMetadata": "8d94a632980bc1706919c242a9bd24173e493a2ebceff285aa7cd098e133cd9a",
+          "withoutMetadata": "88c7a349d0ddf7d373612683df716bd7706f584fd62ce3a707cfe55f8c3e9d78",
+          "linkedWithoutMetadata": "88c7a349d0ddf7d373612683df716bd7706f584fd62ce3a707cfe55f8c3e9d78"
+        },
+        "inherit": [
+          "Ownable",
+          "ERC20",
+          "IERC20Metadata",
+          "IERC20",
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "calculateTokenFee(uint256,uint32)",
+          "excludeFromBurn(address,bool)",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "OMHERC20",
+            "src": "contracts\\OMHERC20.sol:13"
+          },
+          {
+            "kind": "state-variable-assignment",
+            "name": "burnFee",
+            "src": "contracts\\OMHERC20.sol:9"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:36"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:38"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:40"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:42"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol:43"
+            },
+            {
+              "label": "_owner",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_address",
+              "contract": "Ownable",
+              "src": "@openzeppelin\\contracts\\access\\Ownable.sol:21"
+            },
+            {
+              "label": "burnFee",
+              "offset": 20,
+              "slot": "5",
+              "type": "t_uint32",
+              "contract": "OMHERC20",
+              "src": "contracts\\OMHERC20.sol:9"
+            },
+            {
+              "label": "isExcludedFromBurn",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "OMHERC20",
+              "src": "contracts\\OMHERC20.sol:11"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint32": {
+              "label": "uint32",
+              "numberOfBytes": "4"
+            }
+          },
+          "layoutVersion": "1.1",
+          "flat": true
+        }
+      },
+      "Presale": {
+        "src": "contracts\\Presale.sol:7",
+        "version": {
           "withMetadata": "b678ec2c05dd90b0f5c9e395c364989f76061ab08c7ca83741a94e5408e501f8",
           "withoutMetadata": "8d96046382868d01952b2b572363192a747008efba2e806387ccff661a31c2ea",
           "linkedWithoutMetadata": "8d96046382868d01952b2b572363192a747008efba2e806387ccff661a31c2ea"

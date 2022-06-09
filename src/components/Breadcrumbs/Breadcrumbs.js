@@ -1,36 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Web3Context from "../../context/Web3Context";
-import { OMH_ABI, OMH_ADDRESS, PRESALE_ABI, PRESALE_ADDRESS } from "../../config";
-import getWeb3 from "../../utils/getWeb3";
+import { USDT_ABI } from "../../config";
 import { toast } from "react-toastify";
 
 const Breadcrumbs = () => {
+	const { web3, account, omhContract, presaleContract } = useContext(Web3Context);
+	const [usdtContract, setUSDTContract] = useState(null);
 	const [amountToBuy, setAmountToBuy] = useState("");
 	const [tokenPrice, setTokenPrice] = useState(0.065);
 	const [soldAmount, setSoldAmount] = useState(0);
+	const [purchasedAmount, setPurchasedAmount] = useState(0);
+	const [releaseTimestamp, setReleaseTimestamp] = useState(0);
+	const [approvedUSDT, setApprovedUSDT] = useState(false);
 
 	useEffect(async () => {
 		try {
-			const _web3 = await getWeb3();
-			const presaleContract = new _web3.eth.Contract(PRESALE_ABI, PRESALE_ADDRESS);
-			const retSoldAmount = await presaleContract.methods.totalSoldAmount().call();
-			console.log(retSoldAmount);
-			setSoldAmount(retSoldAmount);
+			if (!web3 || !omhContract || !presaleContract) return;
+
+			const usdtContractAddr = await presaleContract.methods.usdtAddr().call();
+			const usdt = new web3.eth.Contract(USDT_ABI, usdtContractAddr);
+    	setUSDTContract(usdt);
+
+			getTotalSoldAmount();
 		} catch (e) {
 			console.log(e);
 		}
-	}, []);
+	}, [web3, omhContract, presaleContract]);
+
+	useEffect(async () => {
+		if (!usdtContract || !account) return;
+
+		let allowance = await usdtContract.methods.allowance(account, presaleContract.options.address).call();
+		setApprovedUSDT(allowance > 0);
+
+		getPurchasedInfo();
+	}, [usdtContract, account]);
 
 	const buyTokenInMatic = async (web3, account, presaleContract) => {
 		// if (amountToBuy === "") return;
 		if (amountToBuy === "") {
-			console.log("must input");
 			toast.error("Please input buy amount");
 			return;
 		}
 
 		if ((amountToBuy < 10000) || (amountToBuy > 20000000)) {
-			console.log("min amount 10000, max amount 20000000");
 			toast.error("Please input correct buy amount, only 10,000 ~ 20,000,000 OMH token available");
 			return;
 		}
@@ -50,31 +63,58 @@ const Breadcrumbs = () => {
 	}
 
 	const buyTokenInUSDT = async (web3, account, presaleContract) => {
-		// if (amountToBuy === "") return;
+		if (approvedUSDT) {
+			if (amountToBuy === "") {
+				toast.error("Please input buy amount");
+				return;
+			}
 
-		if (amountToBuy === "") {
-			console.log("must input");
-			toast.error("Please input buy amount");
-			return;
+			if ((amountToBuy < 10000) || (amountToBuy > 20000000)) {
+				toast.error("Please input correct buy amount, only 10,000 ~ 20,000,000 OMH token available");
+				return;
+			}
+
+			try {
+				const amount = web3.utils.toWei(amountToBuy);
+
+				const estimatedUSDT = await presaleContract.methods.estimatedUSDTAmount(amount).call()
+				presaleContract.methods.buyTokenWithUSDT(amount, estimatedUSDT).send({ from: account })
+				.once("receipt", (receipt) => { getPurchasedInfo(); getTotalSoldAmount(); toast.success("Congratulations"); console.log(receipt); });
+			} catch (e) {
+				console.log(e);
+				toast.error("Error:" + e);
+				return;
+			}
+		} else {
+			try {
+				usdtContract.methods.approve(presaleContract.options.address, "0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF").send({ from: account })
+				.once("receipt", (receipt) => { setApprovedUSDT(true); toast.success("Congratulations"); console.log(receipt); });
+			} catch (e) {
+				console.log(e);
+				toast.error("Error: " + e);
+			}
 		}
+	}
 
-		if ((amountToBuy < 10000) || (amountToBuy > 20000000)) {
-			console.log("min amount 10000, max amount 20000000");
-			toast.error("Please input correct buy amount, only 10,000 ~ 20,000,000 OMH token available");
-			return;
+	const getTotalSoldAmount = async () => {
+		const amount = await presaleContract.methods.totalSoldAmount().call();
+		setSoldAmount(web3.utils.fromWei(amount));
+	}
+
+	const getPurchasedInfo = async () => {
+		let { amount, endLockTimestamp } = await presaleContract.methods.lockedTokens(account).call();
+		if (amount > 0) {
+			setPurchasedAmount(web3.utils.fromWei(amount));
+			setReleaseTimestamp(endLockTimestamp);
+		} else {
+			setPurchasedAmount(0);
+			setReleaseTimestamp(0);
 		}
+	}
 
-		try {
-			const amount = web3.utils.toWei(amountToBuy);
-
-			const estimatedUSDT = await presaleContract.methods.estimatedUSDTAmount(amount).call()
-			presaleContract.methods.buyTokenWithUSDT(amount, estimatedUSDT).send({ from: account })
-			.once("receipt", (receipt) => { toast.success("Congratulations"); console.log(receipt); });
-		} catch (e) {
-			console.log(e);
-			toast.error("Error" + e);
-			return;
-		}
+	const timestampToGMT = (timestamp) => {
+		const date = new Date(timestamp * 1000);
+		return date.toGMTString();
 	}
 
 	return (
@@ -217,57 +257,71 @@ const Breadcrumbs = () => {
 														<h2>{ soldAmount } OMH</h2>
 													</div>
 												</div>
-												<div className="ProjectClasicSlider_Input">
-													<input type="text" pattern="[0-9]*" placeholder="0.00" value={amountToBuy} onChange={(e) => { setAmountToBuy((v) => (e.target.validity.valid ? e.target.value : v)) }} />
-												</div>
-												<div className="ProjectClasicSlider_ClaimBtn">
-													{ (!web3 || !account) && (
-														<>
-															<button
-																className="hover-shape"
-																data-bs-toggle="modal"
-																data-bs-target="#exampleModal"
-															>
-																BUY IN MATIC
-																<span className="hover-shape1"></span>
-																<span className="hover-shape2"></span>
-																<span className="hover-shape3"></span>
-															</button>
-															<button
-																className="hover-shape"
-																data-bs-toggle="modal"
-																data-bs-target="#exampleModal"
-															>
-																BUY IN USDT
-																<span className="hover-shape1"></span>
-																<span className="hover-shape2"></span>
-																<span className="hover-shape3"></span>
-															</button>
-														</>
-													)}
-													{ web3 && account && (
-														<>
-															<button
-																className="hover-shape"
-																onClick={() => { buyTokenInMatic(web3, account, presaleContract); }}
-															>
-																BUY IN MATIC
-																<span className="hover-shape1"></span>
-																<span className="hover-shape2"></span>
-																<span className="hover-shape3"></span>
-															</button>
-															<button
-																className="hover-shape"
-																onClick={() => { buyTokenInUSDT(web3, account, presaleContract); }}
-															>
-																BUY IN USDT
-																<span className="hover-shape1"></span>
-																<span className="hover-shape2"></span>
-																<span className="hover-shape3"></span>
-															</button>
-														</>
-													)}
-												</div>
+												{ (purchasedAmount) && (
+													<>
+														<div className="ProjectClasicSlider_ReleaseDate">
+															<span>Release Date</span>
+															<h2>
+																{ timestampToGMT(releaseTimestamp) }
+															</h2>
+														</div>
+													</>
+												) }
+												{ (!purchasedAmount) && (
+													<>
+														<div className="ProjectClasicSlider_Input">
+															<input type="text" pattern="[0-9]*" placeholder="0.00" value={amountToBuy} onChange={(e) => { setAmountToBuy((v) => (e.target.validity.valid ? e.target.value : v)) }} />
+														</div>
+														<div className="ProjectClasicSlider_ClaimBtn">
+															{ (!web3 || !account) && (
+																<>
+																	<button
+																		className="hover-shape"
+																		data-bs-toggle="modal"
+																		data-bs-target="#exampleModal"
+																	>
+																		BUY IN MATIC
+																		<span className="hover-shape1"></span>
+																		<span className="hover-shape2"></span>
+																		<span className="hover-shape3"></span>
+																	</button>
+																	<button
+																		className="hover-shape"
+																		data-bs-toggle="modal"
+																		data-bs-target="#exampleModal"
+																	>
+																		BUY IN USDT
+																		<span className="hover-shape1"></span>
+																		<span className="hover-shape2"></span>
+																		<span className="hover-shape3"></span>
+																	</button>
+																</>
+															)}
+															{ web3 && account && (
+																<>
+																	<button
+																		className="hover-shape"
+																		onClick={() => { buyTokenInMatic(web3, account, presaleContract); }}
+																	>
+																		BUY IN MATIC
+																		<span className="hover-shape1"></span>
+																		<span className="hover-shape2"></span>
+																		<span className="hover-shape3"></span>
+																	</button>
+																	<button
+																		className="hover-shape"
+																		onClick={() => { buyTokenInUSDT(web3, account, presaleContract); }}
+																	>
+																		{ approvedUSDT ? "BUY IN USDT" : "APPROVE USDT" }
+																		<span className="hover-shape1"></span>
+																		<span className="hover-shape2"></span>
+																		<span className="hover-shape3"></span>
+																	</button>
+																</>
+															)}
+														</div>
+													</>
+												)}
 											</div>
 											<div className="ProjectClasicSliderCenterSect">
 												<span>
@@ -287,7 +341,7 @@ const Breadcrumbs = () => {
 																data-speed="1500"
 															>
 																<span className="counter">
-																	{ soldAmount / 17000000 }
+																	{ parseFloat(soldAmount / 17000000).toFixed(2) }
 																</span>
 																%
 															</p>
